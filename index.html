@@ -40,7 +40,7 @@ body::before {
 /* SECTION LABEL */
 .section-label {
   font-family: 'Space Mono', monospace; font-size: 13px;
-  letter-spacing: 0.28em; text-transform: uppercase; color: var(--rust);
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--white);
   display: flex; align-items: center; gap: 14px; margin-bottom: 32px;
 }
 .section-label::after { content: ""; flex: 1; height: 1px; background: var(--line); max-width: 60px; }
@@ -49,7 +49,7 @@ body::before {
    1. HERO
 ══════════════════════ */
 .hero {
-  display: grid; grid-template-columns: 1fr 400px; gap: 0;
+  display: grid; grid-template-columns: 1fr clamp(220px, 30%, 420px); gap: 0;
   border-bottom: 1px solid var(--line); padding: 80px 0 0;
 }
 .hero-text { padding-bottom: 60px; padding-right: 60px; border-right: 1px solid var(--line); }
@@ -98,13 +98,21 @@ h1 .line2 { display: block; color: var(--rust); }
 .cv-btn:hover { background: var(--rust); border-color: var(--rust); }
 .cv-btn svg { width: 14px; height: 14px; }
 
-.hero-photo { padding-left: 60px; padding-bottom: 60px; display: flex; flex-direction: column; justify-content: flex-end; }
-.photo-frame { position: relative; }
+.hero-photo {
+  padding-left: 50px; padding-bottom: 60px;
+  display: flex; flex-direction: column; justify-content: center;
+  min-width: 0;
+}
+.photo-frame { position: relative; width: 100%; max-width: 100%; }
 .photo-frame::before {
-  content: ""; position: absolute; top: -14px; right: -14px;
+  content: ""; position: absolute; top: -12px; right: -12px;
   width: 100%; height: 100%; border: 2px solid var(--rust); z-index: 0;
 }
-.photo-frame img { width: 100%; display: block; position: relative; z-index: 1; filter: grayscale(20%) contrast(1.08) brightness(0.92); }
+.photo-frame img {
+  width: 100%; height: auto; display: block; position: relative; z-index: 1;
+  filter: grayscale(20%) contrast(1.08) brightness(0.92);
+  object-fit: cover;
+}
 .photo-index { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 0.2em; margin-top: 16px; text-align: right; }
 
 /* ══════════════════════
@@ -212,13 +220,8 @@ h1 .line2 { display: block; color: var(--rust); }
   border: 1px solid var(--line); position: relative; overflow: hidden;
   cursor: default; transition: border-color 0.25s ease;
 }
-.sw-item::before { content: ""; position: absolute; inset: 0; background: var(--rust); transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s ease; z-index: 0; }
-.sw-item:hover { border-color: var(--rust); }
-.sw-item:hover::before { transform: scaleY(1); }
-.sw-item img { width: 64px; height: 64px; position: relative; z-index: 1; transition: filter 0.25s ease, transform 0.25s ease; object-fit: contain; }
-.sw-item:hover img { filter: brightness(100) saturate(0); transform: scale(1.12); }
-.sw-item .sw-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); position: relative; z-index: 1; transition: color 0.25s ease; text-align: center; padding: 0 6px; }
-.sw-item:hover .sw-label { color: #fff; }
+.sw-item img { width: 64px; height: 64px; position: relative; z-index: 1; object-fit: contain; }
+.sw-item .sw-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); position: relative; z-index: 1; text-align: center; padding: 0 6px; }
 
 /* ══════════════════════
    6. EDUCATION
@@ -251,50 +254,109 @@ h1 .line2 { display: block; color: var(--rust); }
 .skills-software  { animation: fadeUp 0.7s 0.3s ease both; }
 .edu-section      { animation: fadeUp 0.7s 0.4s ease both; }
 
-/* MOBILE */
-@media (max-width: 860px) {
-  .page { padding: 0 24px 80px; }
+/* ══════════════════════════════════════
+   RESPONSIVE — 4 BREAKPOINTS
+══════════════════════════════════════ */
 
-  .hero { grid-template-columns: 1fr; padding-top: 50px; text-align: center; }
-  .hero-text { border-right: none; border-bottom: 1px solid var(--line); padding-right: 0; padding-bottom: 50px; display: flex; flex-direction: column; align-items: center; }
+/* ── Large desktop (1200px+) already handled by .page max-width ── */
+
+/* ── Medium desktop / laptop: 900px – 1199px ── */
+@media (max-width: 1199px) {
+  .page { padding: 0 40px 100px; }
+  h1 { font-size: clamp(64px, 9vw, 100px); }
+  .hero { grid-template-columns: 1fr clamp(220px, 28%, 340px); }
+  .hero-text { padding-right: 40px; }
+  .hero-photo { padding-left: 40px; }
+  .projects-grid { grid-template-columns: repeat(3,1fr); }
+}
+
+/* ── Tablet: 700px – 899px ── */
+@media (max-width: 899px) {
+  .page { padding: 0 32px 80px; }
+  h1 { font-size: clamp(54px, 12vw, 80px); }
+
+  /* hero stacks but photo stays reasonable size */
+  .hero { grid-template-columns: 1fr; padding-top: 50px; }
+  .hero-text {
+    border-right: none; border-bottom: 1px solid var(--line);
+    padding-right: 0; padding-bottom: 50px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
   .eyebrow { justify-content: center; }
   .eyebrow::before { display: none; }
-  h1 { font-size: clamp(58px, 16vw, 80px); text-align: center; }
   .role-tag { text-align: center; }
   .contact-row { justify-content: center; }
-  .hero-photo { padding-left: 0; padding-top: 50px; align-items: center; }
-  .photo-frame { max-width: 260px; width: 100%; }
-  .photo-index { text-align: center; }
+  .hero-photo {
+    padding-left: 0; padding-top: 50px; padding-bottom: 50px;
+    align-items: center;
+  }
+  .photo-frame { width: min(340px, 70%); }
 
+  /* about */
   .about-section { grid-template-columns: 1fr; gap: 0; text-align: center; }
   .about-section .section-label { justify-content: center; }
   .about-section .section-label::after { display: none; }
   .about-body { text-align: center; }
 
+  /* showreel */
   .showreel-header { flex-direction: column; align-items: center; gap: 8px; text-align: center; }
   .showreel-section .section-label { justify-content: center; }
   .showreel-section .section-label::after { display: none; }
 
-  .projects-grid { grid-template-columns: 1fr; }
+  /* projects — 2 col on tablet */
+  .projects-grid { grid-template-columns: repeat(2,1fr); }
   .projects-section .section-label { justify-content: center; }
   .projects-section .section-label::after { display: none; }
 
+  /* skills/software stack */
   .skills-software { grid-template-columns: 1fr; }
   .ss-cell { text-align: center; display: flex; flex-direction: column; align-items: center; }
   .ss-cell:first-child { border-right: none; border-bottom: 1px solid var(--line); padding-right: 0; padding-bottom: 50px; }
-  .ss-cell:last-child  { padding-left: 0; }
+  .ss-cell:last-child { padding-left: 0; }
   .ss-cell .section-label { justify-content: center; }
   .ss-cell .section-label::after { display: none; }
   .skill-tags { justify-content: center; }
-  .sw-grid { max-width: 320px; width: 100%; }
+  .sw-grid { max-width: 360px; width: 100%; }
 
+  /* education */
   .edu-section .section-label { justify-content: center; }
   .edu-section .section-label::after { display: none; }
-  .edu-card { grid-template-columns: 1fr; gap: 16px; padding: 36px 28px; text-align: center; justify-items: center; }
+  .edu-card { grid-template-columns: 1fr; gap: 16px; padding: 40px 36px; text-align: center; justify-items: center; }
   .edu-divider { display: none; }
-  .edu-year { font-size: 52px; }
 
   .footer { flex-direction: column; gap: 12px; align-items: center; text-align: center; }
+}
+
+/* ── Mobile: up to 699px ── */
+@media (max-width: 699px) {
+  .page { padding: 0 20px 60px; }
+  h1 { font-size: clamp(48px, 14vw, 68px); }
+
+  .hero { padding-top: 36px; }
+  .hero-text { padding-bottom: 36px; }
+  .contact-row { flex-direction: column; align-items: center; gap: 12px; }
+  .photo-frame { width: min(260px, 80%); }
+
+  /* projects — single col on mobile */
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { padding: 28px 24px; }
+
+  .sw-grid { grid-template-columns: repeat(3,1fr); max-width: 100%; }
+  .sw-item img { width: 44px; height: 44px; }
+
+  .edu-card { padding: 28px 20px; }
+  .edu-year { font-size: 38px; }
+
+  .showreel-title { font-size: clamp(36px, 10vw, 52px); }
+}
+
+/* ── Small mobile: up to 400px ── */
+@media (max-width: 400px) {
+  .page { padding: 0 16px 50px; }
+  h1 { font-size: 48px; }
+  .sw-grid { grid-template-columns: repeat(2,1fr); }
+  .sw-item img { width: 38px; height: 38px; }
+  .project-card { padding: 22px 18px; }
 }
 </style>
 </head>
