@@ -4,301 +4,599 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saran Selvakumar | VFX Portfolio</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 
-/* ================= ROOT ================= */
-
-:root{
-  --bg:#0b0b0b;
-  --card:#121212;
-  --soft:#181818;
-  --white:#f5f5f5;
-  --gray:#a8a8a8;
-  --red:#ff2a1f;
+:root {
+  --bg:    #060606;
+  --card:  #111111;
+  --rust:  #c93a28;
+  --white: #f5f5f5;
+  --dim:   #888;
+  --line:  rgba(255,255,255,0.07);
 }
 
-/* ================= GLOBAL ================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-*{ box-sizing:border-box; }
-
-body{
-  margin:0;
-  font-family:'Poppins', sans-serif;
-  background:linear-gradient(90deg,#ff2a1f 0%,#ff2a1f 18%,#0a0a0a 18%);
-  padding:60px;
-  color:var(--white);
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  overflow-x: hidden;
 }
 
-/* ================= MAIN CONTAINER ================= */
+/* PARTICLES */
+#particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 
-.container{
-  max-width:1100px;
-  margin:auto;
-  background:var(--bg);
-  padding:70px;
-  border-radius:14px;
-  box-shadow:0 40px 90px rgba(0,0,0,.6);
+/* GRAIN */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.8;
 }
 
-/* ================= HEADER ================= */
+/* MARQUEE */
+.marquee-strip { background: var(--rust); overflow: hidden; padding: 10px 0; position: relative; z-index: 10; }
+.marquee-inner { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+.marquee-inner span {
+  font-family: 'Space Mono', monospace; font-size: 11px;
+  letter-spacing: 0.2em; color: #fff; text-transform: uppercase; padding: 0 40px;
+}
+.marquee-inner span::after { content: "◆"; margin-left: 40px; opacity: 0.5; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-.header{
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:50px;
-  align-items:center;
-  margin-bottom:80px;
+/* PAGE */
+.page { max-width: 1200px; margin: 0 auto; padding: 0 60px 100px; position: relative; z-index: 2; }
+
+/* ══════════════════════════════════
+   1. HERO  —  name + photo + quick intro
+══════════════════════════════════ */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 80px 0 0;
+}
+.hero-text {
+  padding-bottom: 60px; padding-right: 60px;
+  border-right: 1px solid var(--line);
+}
+.eyebrow {
+  font-family: 'Space Mono', monospace; font-size: 11px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::before { content: ""; display: block; width: 32px; height: 1px; background: var(--rust); }
+
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(72px, 10vw, 120px);
+  line-height: 0.9; letter-spacing: 0.02em;
+  color: var(--white); margin-bottom: 6px;
+}
+h1 .line2 { display: block; color: var(--rust); }
+
+.role-tag {
+  font-family: 'Space Mono', monospace; font-size: 12px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dim); margin-top: 20px; margin-bottom: 36px;
 }
 
-.profile img{
-  width:100%;
-  border-radius:18px;
-  border:3px solid var(--red);
+.intro-points { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 44px; }
+.intro-points li {
+  font-size: 15px; color: var(--dim); font-weight: 300;
+  display: flex; align-items: flex-start; gap: 12px; line-height: 1.5;
+}
+.intro-points li::before {
+  content: "→"; color: var(--rust);
+  font-family: 'Space Mono', monospace; font-size: 12px; margin-top: 2px; flex-shrink: 0;
 }
 
-h1{
-  margin:0;
-  font-size:48px;
-  font-weight:800;
+.cv-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 30px; background: transparent; color: var(--white);
+  text-decoration: none; font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.2); transition: all 0.25s ease;
+}
+.cv-btn:hover { background: var(--rust); border-color: var(--rust); }
+.cv-btn svg { width: 14px; height: 14px; }
+
+.hero-photo {
+  padding-left: 60px; padding-bottom: 60px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.photo-frame { position: relative; }
+.photo-frame::before {
+  content: ""; position: absolute; top: -14px; right: -14px;
+  width: 100%; height: 100%; border: 2px solid var(--rust); z-index: 0;
+}
+.photo-frame img {
+  width: 100%; display: block; position: relative; z-index: 1;
+  filter: grayscale(20%) contrast(1.08) brightness(0.92);
+}
+.photo-index {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--dim); letter-spacing: 0.2em; margin-top: 16px; text-align: right;
 }
 
-.role{
-  margin-top:8px;
-  font-size:18px;
-  color:var(--red);
-  font-weight:600;
+/* ══════════════════════════════════
+   SECTION LABEL (shared)
+══════════════════════════════════ */
+.section-label {
+  font-family: 'Space Mono', monospace; font-size: 13px;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--rust);
+  display: flex; align-items: center; gap: 14px; margin-bottom: 32px;
+}
+.section-label::after { content: ""; flex: 1; height: 1px; background: var(--line); max-width: 60px; }
+
+/* ══════════════════════════════════
+   2. ABOUT  —  full width, right after hero
+══════════════════════════════════ */
+.about-section {
+  padding: 70px 0;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 70px;
+  align-items: start;
+}
+.about-body {
+  font-size: 16px; font-weight: 300; color: var(--dim); line-height: 2;
+}
+.about-body strong { color: var(--white); font-weight: 500; }
+
+/* ══════════════════════════════════
+   3. SHOWREEL  —  the hero content
+══════════════════════════════════ */
+.showreel-section { padding: 70px 0; border-bottom: 1px solid var(--line); }
+.showreel-header {
+  display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px;
+}
+.showreel-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(42px, 7vw, 72px);
+  line-height: 1; letter-spacing: 0.04em; color: var(--white);
+}
+.showreel-note {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--dim); letter-spacing: 0.15em; text-transform: uppercase; padding-bottom: 6px;
+}
+.video-wrapper {
+  position: relative; width: 100%; aspect-ratio: 16/9;
+  overflow: hidden; background: #000; border: 1px solid var(--line);
+}
+.video-wrapper::after {
+  content: ""; position: absolute; top: 12px; left: 12px;
+  width: 24px; height: 24px;
+  border-top: 2px solid var(--rust); border-left: 2px solid var(--rust);
+  z-index: 3; pointer-events: none;
+}
+.video-corner-br {
+  position: absolute; bottom: 12px; right: 12px;
+  width: 24px; height: 24px;
+  border-bottom: 2px solid var(--rust); border-right: 2px solid var(--rust);
+  z-index: 3; pointer-events: none;
+}
+.video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* ══════════════════════════════════
+   4. SKILLS + SOFTWARE  —  side by side
+══════════════════════════════════ */
+.skills-software {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+}
+.ss-cell {
+  padding: 70px 0;
+}
+.ss-cell:first-child { padding-right: 60px; border-right: 1px solid var(--line); }
+.ss-cell:last-child  { padding-left: 60px; }
+
+/* Skills list */
+.skills-list { display: flex; flex-direction: column; }
+.skill-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0; border-bottom: 1px solid var(--line); cursor: default;
+}
+.skill-row:first-child { border-top: 1px solid var(--line); }
+.skill-name { font-size: 15px; font-weight: 400; color: var(--white); letter-spacing: 0.04em; transition: color 0.2s; }
+.skill-num  { font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.15); }
+.skill-arrow {
+  font-family: 'Space Mono', monospace; font-size: 11px; color: var(--rust);
+  opacity: 0; transform: translateX(-6px); transition: all 0.2s ease;
+}
+.skill-row:hover .skill-arrow { opacity: 1; transform: translateX(0); }
+.skill-row:hover .skill-name  { color: var(--rust); }
+
+/* Software grid — BIG icons */
+.sw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.sw-item {
+  aspect-ratio: 1; background: var(--card);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  border: 1px solid var(--line); position: relative; overflow: hidden;
+  cursor: default; transition: border-color 0.25s ease;
+}
+.sw-item::before {
+  content: ""; position: absolute; inset: 0; background: var(--rust);
+  transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s ease; z-index: 0;
+}
+.sw-item:hover { border-color: var(--rust); }
+.sw-item:hover::before { transform: scaleY(1); }
+.sw-item img {
+  width: 64px; height: 64px; position: relative; z-index: 1;
+  transition: filter 0.25s ease, transform 0.25s ease; object-fit: contain;
+}
+.sw-item:hover img { filter: brightness(100) saturate(0); transform: scale(1.12); }
+.sw-item .sw-label {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dim); position: relative; z-index: 1;
+  transition: color 0.25s ease; text-align: center; padding: 0 6px;
+}
+.sw-item:hover .sw-label { color: #fff; }
+
+/* ══════════════════════════════════
+   5. EDUCATION  —  last, wide card
+══════════════════════════════════ */
+.edu-section { padding: 70px 0; border-bottom: 1px solid var(--line); }
+
+.edu-card {
+  display: grid;
+  grid-template-columns: auto 1px 1fr;
+  gap: 50px;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 48px 54px;
+  position: relative;
+  overflow: hidden;
 }
 
-.intro-list{
-  margin-top:20px;
-  padding-left:18px;
-  color:var(--gray);
-  line-height:1.8;
+/* subtle corner accent */
+.edu-card::before {
+  content: "";
+  position: absolute; top: 0; right: 0;
+  width: 120px; height: 120px;
+  border-top: 2px solid var(--rust);
+  border-right: 2px solid var(--rust);
+  opacity: 0.3;
 }
 
-.cv-btn{
-  margin-top:25px;
-  display:inline-block;
-  padding:12px 26px;
-  background:var(--red);
-  color:#fff;
-  text-decoration:none;
-  border-radius:8px;
-  font-weight:600;
-  transition:.3s;
+.edu-year {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 68px; color: var(--rust); line-height: 1; white-space: nowrap;
 }
 
-.cv-btn:hover{
-  background:#fff;
-  color:#000;
+.edu-divider { width: 1px; height: 80px; background: var(--line); }
+
+.edu-info {}
+.edu-degree {
+  font-family: 'Bebas Neue', sans-serif; font-size: 32px;
+  color: var(--white); letter-spacing: 0.04em; line-height: 1.1; margin-bottom: 12px;
+}
+.edu-note {
+  font-family: 'Space Mono', monospace; font-size: 11px;
+  letter-spacing: 0.18em; color: var(--dim); text-transform: uppercase;
 }
 
-/* ================= SHOWREEL ================= */
-
-.video-section{
-  margin-bottom:80px;
+/* FOOTER */
+.footer { padding-top: 50px; display: flex; align-items: center; justify-content: space-between; }
+.footer-name {
+  font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+  letter-spacing: 0.1em; color: var(--white); opacity: 0.18;
+}
+.footer-copy {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--dim); letter-spacing: 0.12em; text-transform: uppercase;
 }
 
-.section-title{
-  font-size:24px;
-  font-weight:700;
-  margin-bottom:25px;
-  position:relative;
-  padding-left:16px;
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.hero             { animation: fadeUp 0.7s 0.0s ease both; }
+.about-section    { animation: fadeUp 0.7s 0.1s ease both; }
+.showreel-section { animation: fadeUp 0.7s 0.2s ease both; }
+.skills-software  { animation: fadeUp 0.7s 0.3s ease both; }
+.edu-section      { animation: fadeUp 0.7s 0.4s ease both; }
 
-.section-title::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:50%;
-  transform:translateY(-50%);
-  width:8px;
-  height:8px;
-  background:var(--red);
-  border-radius:50%;
-}
+/* MOBILE */
+@media (max-width: 860px) {
+  .page { padding: 0 24px 80px; }
 
-.video-wrapper{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  border-radius:16px;
-  overflow:hidden;
-  border:2px solid rgba(255,42,31,.3);
-}
-
-.video-wrapper iframe{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
-}
-
-/* ================= GRID CONTENT ================= */
-
-.poster{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:60px;
-}
-
-.block{
-  background:var(--card);
-  padding:30px;
-  border-radius:16px;
-  border:1px solid rgba(255,42,31,.15);
-}
-
-/* ================= SOFTWARE GRID ================= */
-
-.skills-grid{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:20px;
-}
-
-.skill{
-  background:var(--soft);
-  border-radius:14px;
-  padding:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(255,42,31,.2);
-}
-
-.skill img{
-  width:40px;
-  height:40px;
-}
-
-/* ================= TEXT STYLING ================= */
-
-p{
-  color:var(--gray);
-  line-height:1.8;
-  margin:0;
-}
-
-ul{
-  margin:0;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:900px){
-
-  body{
-    padding:25px;
-    background:#0a0a0a;
+  /* ── HERO ── */
+  .hero { grid-template-columns: 1fr; padding-top: 50px; text-align: center; }
+  .hero-text {
+    border-right: none; border-bottom: 1px solid var(--line);
+    padding-right: 0; padding-bottom: 50px;
+    display: flex; flex-direction: column; align-items: center;
   }
-
-  .container{
-    padding:40px;
+  .eyebrow { justify-content: center; }
+  .eyebrow::before { display: none; }
+  h1 { font-size: clamp(58px, 16vw, 80px); text-align: center; }
+  .role-tag { text-align: center; }
+  .intro-points { text-align: left; width: 100%; max-width: 340px; }
+  .hero-photo {
+    padding-left: 0; padding-top: 50px;
+    align-items: center;
   }
+  .photo-frame { max-width: 260px; width: 100%; }
+  .photo-index { text-align: center; }
 
-  .header{
-    grid-template-columns:1fr;
-    text-align:center;
+  /* ── ABOUT ── */
+  .about-section {
+    grid-template-columns: 1fr; gap: 0;
+    text-align: center;
   }
+  .about-section .section-label { justify-content: center; }
+  .about-section .section-label::after { display: none; }
+  .about-body { text-align: center; }
 
-  .poster{
-    grid-template-columns:1fr;
+  /* ── SHOWREEL ── */
+  .showreel-header { flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+  .showreel-section .section-label { justify-content: center; }
+  .showreel-section .section-label::after { display: none; }
+
+  /* ── SKILLS + SOFTWARE ── */
+  .skills-software { grid-template-columns: 1fr; }
+  .ss-cell {
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center;
   }
-
-  .skills-grid{
-    grid-template-columns:repeat(2, 1fr);
+  .ss-cell:first-child {
+    border-right: none; border-bottom: 1px solid var(--line);
+    padding-right: 0; padding-bottom: 50px;
   }
+  .ss-cell:last-child { padding-left: 0; }
+  .ss-cell .section-label { justify-content: center; }
+  .ss-cell .section-label::after { display: none; }
+  .skills-list { width: 100%; max-width: 320px; }
+  .sw-grid { max-width: 320px; width: 100%; }
 
+  /* ── EDUCATION ── */
+  .edu-section .section-label { justify-content: center; }
+  .edu-section .section-label::after { display: none; }
+  .edu-card {
+    grid-template-columns: 1fr; gap: 16px; padding: 36px 28px;
+    text-align: center; justify-items: center;
+  }
+  .edu-divider { display: none; }
+  .edu-year { font-size: 52px; }
+
+  /* ── FOOTER ── */
+  .footer { flex-direction: column; gap: 12px; align-items: center; text-align: center; }
 }
-
 </style>
 </head>
 <body>
 
-<div class="container">
+<canvas id="particles"></canvas>
 
-<!-- HEADER -->
-<div class="header">
-
-  <div class="profile">
-    <img src="DP.jpg" alt="Saran Selvakumar">
-  </div>
-
-  <div>
-    <h1>Saran Selvakumar</h1>
-    <div class="role">VFX Compositor | Roto & Paint Artist</div>
-
-    <ul class="intro-list">
-      <li>Focused on professional compositing workflows</li>
-      <li>Experience in Roto, RotoPaint and Cleanup tasks</li>
-      <li>Detail-oriented with strong visual integration skills</li>
-    </ul>
-
-    <a href="cv.pdf" class="cv-btn" download>Download CV</a>
-  </div>
-
-</div>
-
-<!-- SHOWREEL -->
-<div class="video-section">
-  <div class="section-title">Showreel</div>
-  <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/p2YKLemOpMw" allowfullscreen></iframe>
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>VFX Compositor</span><span>Roto &amp; Paint Artist</span>
+    <span>Compositing</span><span>Matchmove</span><span>Cleanup</span>
+    <span>Nuke · After Effects · Maya</span>
+    <span>VFX Compositor</span><span>Roto &amp; Paint Artist</span>
+    <span>Compositing</span><span>Matchmove</span><span>Cleanup</span>
+    <span>Nuke · After Effects · Maya</span>
   </div>
 </div>
 
-<!-- GRID CONTENT -->
-<div class="poster">
+<div class="page">
 
-  <div class="block">
-    <div class="section-title">About Me</div>
-    <p>
-      Fresher VFX artist specializing in compositing and shot cleanup.
-      Strong understanding of layer-based workflows, matte extraction,
-      edge refinement and seamless integration techniques.
-    </p>
-  </div>
-
-  <div class="block">
-    <div class="section-title">Softwares</div>
-    <div class="skills-grid">
-      <div class="skill"><img src="nuke.png"></div>
-      <div class="skill"><img src="after-effects.png"></div>
-      <div class="skill"><img src="photoshop.png"></div>
-      <div class="skill"><img src="maya.png"></div>
-      <div class="skill"><img src="blender.png"></div>
-      <div class="skill"><img src="premiere-pro.png"></div>
+  <!-- ① HERO -->
+  <div class="hero">
+    <div class="hero-text">
+      <div class="eyebrow">Portfolio</div>
+      <h1>Saran<span class="line2">Selvakumar</span></h1>
+      <div class="role-tag">VFX Compositor · Roto &amp; Paint Artist</div>
+      <ul class="intro-points">
+        <li>Focused on professional compositing workflows</li>
+        <li>Experience in Roto, RotoPaint and Cleanup tasks</li>
+        <li>Detail-oriented with strong visual integration skills</li>
+      </ul>
+      <a href="cv.pdf" class="cv-btn" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download CV
+      </a>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-frame">
+        <img src="DP.jpg" alt="Saran Selvakumar">
+      </div>
+      <div class="photo-index">001 / PORTRAIT</div>
     </div>
   </div>
 
-  <div class="block">
-    <div class="section-title">Education</div>
-    <p>
-      2023 – 2026<br>
-      Bachelor of Applied Arts and Crafts
+  <!-- ② ABOUT — right after intro while attention is high -->
+  <div class="about-section">
+    <div>
+      <div class="section-label">02 / About</div>
+    </div>
+    <p class="about-body">
+      Fresher VFX artist specialising in <strong>compositing and shot cleanup</strong>.
+      Strong understanding of layer-based workflows, <strong>matte extraction</strong>,
+      edge refinement and seamless integration techniques — focused on delivering
+      clean, professional work that holds up in production pipelines.
     </p>
   </div>
 
-  <div class="block">
-    <div class="section-title">Core Skills</div>
-    <p>
-      Compositing<br>
-      Roto<br>
-      RotoPaint<br>
-      Cleanup<br>
-      Matchmove
-    </p>
+  <!-- ③ SHOWREEL — the most important thing, shown early -->
+  <div class="showreel-section">
+    <div class="showreel-header">
+      <div>
+        <div class="section-label">03 / Reel</div>
+        <div class="showreel-title">Showreel</div>
+      </div>
+      <div class="showreel-note">2025 Demo Reel</div>
+    </div>
+    <div class="video-wrapper">
+      <div class="video-corner-br"></div>
+      <iframe src="https://www.youtube.com/embed/p2YKLemOpMw" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- ④ CORE SKILLS + SOFTWARE — what I can do & what I use -->
+  <div class="skills-software">
+    <div class="ss-cell">
+      <div class="section-label">04 / Core Skills</div>
+      <div class="skills-list">
+        <div class="skill-row">
+          <span class="skill-name">Compositing</span>
+          <span class="skill-arrow">→</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Roto</span>
+          <span class="skill-arrow">→</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">RotoPaint</span>
+          <span class="skill-arrow">→</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Cleanup</span>
+          <span class="skill-arrow">→</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Matchmove</span>
+          <span class="skill-arrow">→</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ss-cell">
+      <div class="section-label">05 / Software</div>
+      <div class="sw-grid">
+        <div class="sw-item"><img src="nuke.png" alt="Nuke"><span class="sw-label">Nuke</span></div>
+        <div class="sw-item"><img src="after-effects.png" alt="After Effects"><span class="sw-label">After Effects</span></div>
+        <div class="sw-item"><img src="photoshop.png" alt="Photoshop"><span class="sw-label">Photoshop</span></div>
+        <div class="sw-item"><img src="maya.png" alt="Maya"><span class="sw-label">Maya</span></div>
+        <div class="sw-item"><img src="blender.png" alt="Blender"><span class="sw-label">Blender</span></div>
+        <div class="sw-item"><img src="premiere-pro.png" alt="Premiere Pro"><span class="sw-label">Premiere</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ EDUCATION — credentials at the end, not the lead -->
+  <div class="edu-section">
+    <div class="section-label">06 / Education</div>
+    <div class="edu-card">
+      <div class="edu-year">2023<br>—<br>2026</div>
+      <div class="edu-divider"></div>
+      <div class="edu-info">
+        <div class="edu-degree">Bachelor of Applied<br>Arts and Crafts</div>
+        <div class="edu-note">Undergraduate · In Progress</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-name">Saran Selvakumar</div>
+    <div class="footer-copy">VFX Compositor · Portfolio</div>
   </div>
 
 </div>
 
-</div>
+<script>
+const canvas = document.getElementById('particles');
+const ctx    = canvas.getContext('2d');
+let W, H, pool = [];
+
+function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', ()=>{ resize(); build(); });
+function rand(a,b){ return a + Math.random()*(b-a); }
+
+class Dot {
+  constructor(){ this.spawn(true); }
+  spawn(init){
+    this.x=rand(0,W); this.y=init?rand(0,H):H+6;
+    this.r=rand(0.3,1.4); this.vy=rand(0.1,0.45); this.vx=rand(-0.08,0.08);
+    this.a=rand(0.06,0.38); this.t=0; this.T=rand(280,700);
+  }
+  step(){
+    this.x+=this.vx; this.y-=this.vy; this.t++;
+    const p=this.t/this.T;
+    this.o = p<.15?(p/.15)*this.a : p>.75?((1-p)/.25)*this.a : this.a;
+    if(this.t>=this.T||this.y<-8) this.spawn();
+  }
+  draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${this.o})`; ctx.fill(); }
+}
+
+class Streak {
+  constructor(){ this.spawn(true); }
+  spawn(init){
+    this.x=rand(0,W); this.y=init?rand(0,H):H+40;
+    this.len=rand(35,110); this.vy=rand(0.18,0.55);
+    this.a=rand(0.025,0.09); this.t=0; this.T=rand(350,900);
+  }
+  step(){
+    this.y-=this.vy; this.t++;
+    const p=this.t/this.T;
+    this.o = p<.12?(p/.12)*this.a : p>.8?((1-p)/.2)*this.a : this.a;
+    if(this.t>=this.T||this.y<-this.len) this.spawn();
+  }
+  draw(){
+    const g=ctx.createLinearGradient(this.x,this.y,this.x,this.y+this.len);
+    g.addColorStop(0,`rgba(255,255,255,0)`);
+    g.addColorStop(.45,`rgba(255,255,255,${this.o})`);
+    g.addColorStop(1,`rgba(255,255,255,0)`);
+    ctx.beginPath(); ctx.moveTo(this.x,this.y); ctx.lineTo(this.x,this.y+this.len);
+    ctx.strokeStyle=g; ctx.lineWidth=0.7; ctx.stroke();
+  }
+}
+
+class Scan {
+  constructor(){ this.spawn(true); }
+  spawn(init){
+    this.y=init?rand(0,H):-2; this.x=rand(0,W*0.6);
+    this.w=rand(60,220); this.vy=rand(0.3,1.0);
+    this.a=rand(0.015,0.06); this.t=0; this.T=rand(200,600);
+  }
+  step(){
+    this.y+=this.vy; this.t++;
+    const p=this.t/this.T;
+    this.o = p<.1?(p/.1)*this.a : p>.8?((1-p)/.2)*this.a : this.a;
+    if(this.t>=this.T||this.y>H+4) this.spawn();
+  }
+  draw(){
+    const g=ctx.createLinearGradient(this.x,this.y,this.x+this.w,this.y);
+    g.addColorStop(0,`rgba(255,255,255,0)`);
+    g.addColorStop(.5,`rgba(255,255,255,${this.o})`);
+    g.addColorStop(1,`rgba(255,255,255,0)`);
+    ctx.beginPath(); ctx.moveTo(this.x,this.y); ctx.lineTo(this.x+this.w,this.y);
+    ctx.strokeStyle=g; ctx.lineWidth=0.6; ctx.stroke();
+  }
+}
+
+function build(){
+  pool=[];
+  for(let i=0;i<130;i++) pool.push(new Dot());
+  for(let i=0;i<35;i++)  pool.push(new Streak());
+  for(let i=0;i<20;i++)  pool.push(new Scan());
+}
+build();
+
+(function loop(){
+  ctx.clearRect(0,0,W,H);
+  pool.forEach(p=>{ p.step(); p.draw(); });
+  requestAnimationFrame(loop);
+})();
+</script>
 
 </body>
 </html>
